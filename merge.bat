@@ -21,7 +21,7 @@ if not exist %2 (
 
 set outputFileName="result.srt"
 if "%3" == "" (
-	echo 输出文件名未指定，将使用result.srt作为输出文件名
+	echo 输出文件名未指定，将使用 result.srt 作为输出文件名
 	pause ) else (
 	set outputFileName=%3
 )
@@ -45,6 +45,11 @@ for /f %%a in (%2) do (
 	set /a numberOfRows=!numberOfRows! + 1
 )
 
+rem 获取回车字符，用于原地显示合并进度
+for /f %%a in ('copy /Z "%~dpf0" nul') do (
+	set "carriageReturn=%%a"
+) 
+
 for /f "tokens=*" %%i in (%2) do (
 	set /a temp1=!lineNumber1! %% 3
 	if !temp1! == 0 (
@@ -66,11 +71,12 @@ for /f "tokens=*" %%i in (%2) do (
 	
 	set /a progress=!lineNumber1! * 100 / !numberOfRows!
 	if !progress! neq !progressTemp! (
-		echo 进度：!progress! %%
+		set /p"=.!carriageReturn!进度：!progress!%%" <nul 
 	)
 	set /a progressTemp=!progress!
 )
 
+echo.
 echo 合并完成，程序正常退出
 
 endlocal
