@@ -21,7 +21,7 @@ if not exist %2 (
 
 set outputFileName="result.srt"
 if "%3" == "" (
-	echo 输出文件名未指定，将使用result.srt作为输出文件名
+	echo 输出文件名未指定，将使用 result.srt 作为输出文件名
 	pause ) else (
 	set outputFileName=%3
 )
